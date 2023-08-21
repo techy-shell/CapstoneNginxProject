@@ -1,0 +1,90 @@
+version: 2.1
+
+orbs:
+  aws-eks: circleci/aws-eks@1.1.0
+  kubernetes: circleci/kubernetes@0.12.0
+
+jobs:
+  linting:
+    docker:
+      - image: python:3.7.3-stretch
+    working_directory: /Capstone
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv ~/.capstone
+            source ~/.capstone/bin/activate
+            make install
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolint
+      - save_cache:
+          paths:
+            - ./devops
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - run:
+          name: run lint
+          command: |
+            . devops/bin/activate
+            make lint
+
+  build-image:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run:
+          name: Check Docker installed
+          command:
+            docker --version
+      - run:
+          name: Build Docker image
+          command: |
+            ./run_docker.sh
+      - run:
+          name: Push Docker image
+          command: |
+            ./push_docker.sh
+
+  deploy-image:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Build EKS cluster
+          command: |
+
+      - run:
+          name: Deploy Docker image
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
+            docker tag capstone:latest 182785921749.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+            eksctl create cluster --name myCapstoneProject --nodes=4
+
+  delete-cluster:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Delete EKS cluster
+          command: |
+            eksctl delete cluster --region=us-east-1 --name=myCapstoneProject
+
+
+workflows:
+  build:
+    jobs:
+      - linting
+      - build-image:
+          requires: [linting]
+#      - deploy-image:
+#          requires: [build-image]
+#      - delete-cluster
+
