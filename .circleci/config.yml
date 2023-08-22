@@ -42,6 +42,8 @@ jobs:
           name: Check Docker installed
           command:
             docker --version
+            sudo systemctl status docker
+            sudo systemctl start docker
       - run:
           name: Build Docker image
           command: |
