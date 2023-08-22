@@ -2,8 +2,9 @@ FROM ubuntu:18.04
 
 WORKDIR /venv
 
-RUN apt-get -y update \
-    && apt-get install -y nginx==1.25 --no-install-recommends \
+RUN #hadolint ignore=DL3008\
+    apt-get -y update \
+    && apt-get install -y nginx --no-install-recommends \
     &&  rm -rf /var/lib/apt/lists/*
 
 COPY nginx.conf /etc/nginx/nginx.conf
