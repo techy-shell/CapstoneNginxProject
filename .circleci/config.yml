@@ -82,8 +82,8 @@ workflows:
   build:
     jobs:
       - linting
-#      - build-image:
-#          requires: [linting]
+      - build-image:
+          requires: [linting]
 #      - deploy-image:
 #          requires: [build-image]
 #      - delete-cluster
