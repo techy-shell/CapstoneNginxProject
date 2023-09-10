@@ -91,9 +91,6 @@ jobs:
             kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
             kubectl get deploy,rs,svc,pods
             kubectl port-forward pod/capstone-75ddcd84f7-mmmgz --address 0.0.0.0 5001:5001
-  delay:
-    steps:
-      - run: sleep 1200
 
   delete-cluster:
     docker:
@@ -116,8 +113,8 @@ workflows:
           requires: [build-image]
       - deploy-image:
           requires: [build-image]
-      - delay:
-          requires: [deploy-image]
-      - delete-cluster:
-          requires: [delay]
+#      - delay:
+#          requires: [deploy-image]
+#      - delete-cluster:
+#          requires: [delay]
 
