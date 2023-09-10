@@ -38,7 +38,7 @@ Resources:
     Properties:
       KubernetesNetworkConfig:
         IpFamily: ipv4
-      Name: !Ref EnvironmentName
+      Name: myCapstoneProject
       ResourcesVpcConfig:
         EndpointPrivateAccess: false
         EndpointPublicAccess: true
