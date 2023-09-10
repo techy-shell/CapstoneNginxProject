@@ -117,8 +117,8 @@ workflows:
 #          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-      - deploy-image:
-          requires: [build-image]
+      - deploy-image
+#          requires: [build-image]
 #      - delete-cluster:
 #          requires: [delay]
 
