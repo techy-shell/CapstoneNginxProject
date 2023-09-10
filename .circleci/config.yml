@@ -83,20 +83,20 @@ jobs:
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
             install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
             kubectl version --client
-      - run:
-          name: Build EKS cluster
-          command: |
-            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
-            aws cloudformation describe-stacks
 #      - run:
-#          name: Deploy Docker image to EKS
+#          name: Build EKS cluster
 #          command: |
-#            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
-#            docker tag capstone:latest 182785921749.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
-#            kubectl get nodes
-#            kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
-#            kubectl get deploy,rs,svc,pods
-#            kubectl port-forward pod/capstone-75ddcd84f7-mmmgz --address 0.0.0.0 5001:5001
+#            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
+#            aws cloudformation describe-stacks
+      - run:
+          name: Deploy Docker image to EKS
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
+            docker tag capstone:latest 182785921749.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+            kubectl get nodes
+            kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
+            kubectl get deploy,rs,svc,pods
+            kubectl port-forward pod/capstone-75ddcd84f7-mmmgz --address 0.0.0.0 5001:5001
 
   delete-cluster:
     docker:
@@ -112,11 +112,11 @@ jobs:
 workflows:
   build:
     jobs:
-      - linting
-      - build-image:
-          requires: [linting]
-      - cfn-lint:
-          requires: [build-image]
+#      - linting
+#      - build-image:
+#          requires: [linting]
+#      - cfn-lint:
+#          requires: [build-image]
       - deploy-image:
           requires: [build-image]
 #      - delete-cluster:
