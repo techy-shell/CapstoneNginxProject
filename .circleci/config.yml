@@ -60,15 +60,30 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build EKS cluster
+          name: Install kubectl
           command: |
-
+            kubectl version --client
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            kubectl version --client
       - run:
-          name: Deploy Docker image
+          name: Install eksctl
           command: |
-            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
-            docker tag capstone:latest 182785921749.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
-            eksctl create cluster --name myCapstoneProject --nodes=4
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            eksctl version
+#      - run:
+#          name: Build EKS cluster
+#          command: |
+#            eksctl create cluster --name myCapstoneProject --nodes=4
+#            eksctl get cluster --name= myCapstoneProject --region=us-east-1
+#      - run:
+#          name: Deploy Docker image to EKS
+#          command: |
+#            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
+#            docker tag capstone:latest 182785921749.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+#            kubectl get nodes
+#            kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
+#            kubectl get deploy,rs,svc,pods
+#            kubectl port-forward pod/capstone-75ddcd84f7-mmmgz --address 0.0.0.0 5001:5001
 
   delete-cluster:
     docker:
@@ -85,9 +100,9 @@ workflows:
   build:
     jobs:
       - linting
-#      - build-image:
-#          requires: [linting]
-#      - deploy-image:
-#          requires: [build-image]
+      - build-image:
+          requires: [linting]
+      - deploy-image:
+          requires: [build-image]
 #      - delete-cluster
 

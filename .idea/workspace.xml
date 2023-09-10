@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6780d313-222f-42c7-8603-b0739c3cf458" name="Changes" comment="ADDING SCREENSHOTS &amp; GITHUB REPO LINK - COMMENTED OUT BUILD JOB">
-      <change afterPath="$PROJECT_DIR$/GitHubRepo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Screenshots/HADOLINT - FAIL.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Screenshots/HADOLINT - PASS.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.circleci/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.circleci/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_docker.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run_docker.sh" afterDir="false" />
-    </list>
+    <list default="true" id="6780d313-222f-42c7-8603-b0739c3cf458" name="Changes" comment="Adding the base Cloudformation scripts" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,14 +22,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/rachellenmaconeghy/Desktop/TestHelloWorld"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rachellenmaconeghy/Desktop/TestHelloWorld&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -205,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1692717557926</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Adding the base Cloudformation scripts">
+      <option name="closed" value="true" />
+      <created>1692719900514</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1692719900514</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -217,6 +219,7 @@
     <MESSAGE value="Hadolint passes &amp; Dockerfile builds and runs with no errors" />
     <MESSAGE value="test build-image job" />
     <MESSAGE value="ADDING SCREENSHOTS &amp; GITHUB REPO LINK - COMMENTED OUT BUILD JOB" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADDING SCREENSHOTS &amp; GITHUB REPO LINK - COMMENTED OUT BUILD JOB" />
+    <MESSAGE value="Adding the base Cloudformation scripts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding the base Cloudformation scripts" />
   </component>
 </project>
