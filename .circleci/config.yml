@@ -61,7 +61,15 @@ jobs:
       - checkout
       - run:
           name: Validate CloudFormation template
-          command: pip install cfn-lint && cfn-lint cfn/ekscfn.yml
+          command: pip install cfn-lint && cfn-lint ekscfn.yml
+
+  aws-cli-cred-setup:
+    executor: aws-cli/default
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY
+          aws-secret-access-key: AWS_ACCESS_SECRET
+          aws-region: AWS_REGION_NAME
 
   deploy-image:
     docker:
@@ -111,8 +119,10 @@ workflows:
           requires: [linting]
       - cfn-lint:
           requires: [build-image]
+      - aws-cli-cred-setup:
+          requires: [cfn-lint]
       - deploy-image:
-          requires: [build-image]
+          requires: [aws-cli-cred-setup]
 #      - delay:
 #          requires: [deploy-image]
 #      - delete-cluster:
