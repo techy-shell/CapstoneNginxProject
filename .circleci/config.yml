@@ -124,10 +124,10 @@ workflows:
 #          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-      - aws-cli-cred-setup:
-          requires: [build-image]
-      - deploy-image:
-          requires: [aws-cli-cred-setup]
+#      - aws-cli-cred-setup:
+#          requires: [build-image]
+      - deploy-image
+#          requires: [aws-cli-cred-setup]
 #      - delay:
 #          requires: [deploy-image]
 #      - delete-cluster:
