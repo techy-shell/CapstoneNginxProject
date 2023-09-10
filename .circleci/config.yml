@@ -56,10 +56,12 @@ jobs:
 
   deploy-image:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - setup_remote_docker
+      - run: apk add --update tar gzip nodejs npm curl
+      - run: pip install awscli
       - run:
           name: Install eksctl
           command: |
