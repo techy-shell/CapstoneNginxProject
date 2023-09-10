@@ -3,7 +3,7 @@ mv /tmp/eksctl /usr/local/bin
 eksctl version
 eksctl get cluster --name=myCapstoneProject --region=us-east-1
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
-docker tag capstone:latest 182785921749.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+docker tag capstone:latest 182785921749.dkr.ecr.us-east-1.amazonaws.com/capstone
 kubectl get nodes
 kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
 kubectl get deploy,rs,svc,pods
