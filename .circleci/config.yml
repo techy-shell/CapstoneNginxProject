@@ -55,14 +55,14 @@ jobs:
           command: |
             ./push_docker.sh
 
-#  cfn-lint:
-#    docker:
-#      - image: cimg/python:3.9
-#    steps:
-#      - checkout
-#      - run:
-#          name: Validate CloudFormation template
-#          command: pip install cfn-lint && cfn-lint ekscfn.yml
+  cfn-lint:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: Validate CloudFormation template
+          command: pip install cfn-lint && cfn-lint ekscfn.yml
 
 
   deploy-image:
