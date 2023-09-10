@@ -62,10 +62,10 @@ jobs:
       - setup_remote_docker
       - run: apk add --update tar gzip nodejs npm curl
       - run: pip install awscli
-      - run:
-          name: Install eksctl
-          command: |
-            ./eksctl.sh
+#      - run:
+#          name: Install eksctl
+#          command: |
+#            ./eksctl.sh
       - run:
           name: Install kubectl
           command: |
@@ -100,10 +100,10 @@ jobs:
 workflows:
   build:
     jobs:
-      - linting
-      - build-image:
-          requires: [linting]
-      - deploy-image:
-          requires: [build-image]
+#      - linting
+#      - build-image:
+#          requires: [linting]
+      - deploy-image
+#          requires: [build-image]
 #      - delete-cluster
 
