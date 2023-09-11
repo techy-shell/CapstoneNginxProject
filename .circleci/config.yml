@@ -125,7 +125,7 @@ jobs:
       - run:
           name: Delete EKS cluster
           command: |
-            eksctl delete cluster --region=us-east-1 --name=myCapstoneProject
+            eksctl delete cluster --region=us-east-1 --name=myCluster
 
 
 workflows:
