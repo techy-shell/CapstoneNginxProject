@@ -77,19 +77,16 @@ jobs:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_ACCESS_SECRET
             aws-region: AWS_REGION_NAME
-      - run:
-          name: Install eksctl
-          command: |
-            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+#      - run:
+#          name: Install eksctl
+#          command: |
+#            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
       - run:
           name: Build EKS cluster
           command: |
-            eksctl create cluster --name myCapstoneProject --nodes=4
-            
-
-#            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
+            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
 #            aws cloudformation create-stack --stack-name myCapstoneProjectNodeGroup --region us-east-1 --template-body file://ekscfnNodeGroup.yml --capabilities CAPABILITY_IAM
-#            aws cloudformation describe-stacks
+            aws cloudformation describe-stacks
 
   deploy-eks:
     docker:
