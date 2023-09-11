@@ -72,7 +72,6 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: apk add --update tar gzip nodejs npm curl
-      - run: pip install awscli
       - aws-cli/setup:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_ACCESS_SECRET
