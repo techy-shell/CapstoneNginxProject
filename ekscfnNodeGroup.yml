@@ -38,7 +38,7 @@ Resources:
           HttpPutResponseHopLimit: 2
           HttpTokens: required
         SecurityGroupIds:
-          - !ImportValue 'eksctl-myCluster-cluster::ClusterSecurityGroupId'
+          - !ImportValue 'eksctl-myCapstoneProject-cluster::ClusterSecurityGroupId'
         TagSpecifications:
           - ResourceType: instance
             Tags:
