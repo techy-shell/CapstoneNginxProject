@@ -106,6 +106,12 @@ jobs:
             sudo systemctl status docker
             sudo systemctl start docker
       - run:
+          name: Install kubectl
+          command: |
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+            kubectl version --client
+      - run:
           name: Deploy Docker image to EKS
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
