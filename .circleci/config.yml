@@ -148,8 +148,8 @@ workflows:
 #          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-#      - build-eks
-      - deploy-eks
+      - build-eks
+#      - deploy-eks
 #      - delay:
 #          requires: [deploy-image]
 #      - delete-cluster:
