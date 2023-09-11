@@ -89,7 +89,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      -  kubernetes/install-kubectl
+      - kubernetes/install-kubectl
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_ACCESS_SECRET
@@ -100,12 +100,6 @@ jobs:
             docker --version
             sudo systemctl status docker
             sudo systemctl start docker
-#      - run:
-#          name: Install kubectl
-#          command: |
-#            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-#            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-#            kubectl version --client
       - run:
           name: Deploy Docker image to EKS
           command: |
