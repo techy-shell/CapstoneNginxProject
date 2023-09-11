@@ -114,7 +114,7 @@ jobs:
             kubectl get nodes
             kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
             kubectl get deploy,rs,svc,pods
-            kubectl port-forward pod/capstone-75ddcd84f7-xv4sd --address 0.0.0.0 5001:5001
+            kubectl port-forward pod/capstone-75ddcd84f7-skds5 --address 0.0.0.0 5001:5001
 
 
 #      - run:
