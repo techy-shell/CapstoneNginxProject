@@ -71,8 +71,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: apk add --update tar gzip nodejs npm curl
-      - run: pip install awscli
       - aws-cli/setup:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_ACCESS_SECRET
@@ -115,13 +113,13 @@ jobs:
 workflows:
   build:
     jobs:
-      - linting
-      - build-image:
-          requires: [linting]
+#      - linting
+#      - build-image:
+#          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-      - deploy-image:
-          requires: [build-image]
+      - deploy-image
+#          requires: [build-image]
 #      - delay:
 #          requires: [deploy-image]
 #      - delete-cluster:
