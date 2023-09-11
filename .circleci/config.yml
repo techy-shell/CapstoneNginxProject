@@ -75,12 +75,12 @@ jobs:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_ACCESS_SECRET
             aws-region: AWS_REGION_NAME
-      - run:
-          name: Install kubectl
-          command: |
-            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-            kubectl version --client
+#      - run:
+#          name: Install kubectl
+#          command: |
+#            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+#            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+#            kubectl version --client
       - run:
           name: Build EKS cluster
           command: |
