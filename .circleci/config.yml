@@ -136,7 +136,7 @@ workflows:
 #          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-      - deploy-image
+      - build-eks
 #      - deploy-eks
 #      - delay:
 #          requires: [deploy-image]
