@@ -87,6 +87,8 @@ jobs:
             aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
             aws cloudformation describe-stacks
 
+  #            aws cloudformation create-stack --stack-name myCapstoneProjectNodeGroup --region us-east-1 --template-body file://ekscfnNodeGroup.yml --capabilities CAPABILITY_IAM
+
   deploy-eks:
     docker:
       - image: circleci/node:13.8.0
@@ -139,8 +141,8 @@ workflows:
 #          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-      - build-eks
-#      - deploy-eks
+#      - build-eks
+      - deploy-eks
 #      - delay:
 #          requires: [deploy-image]
 #      - delete-cluster:
