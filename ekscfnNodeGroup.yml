@@ -38,7 +38,7 @@ Resources:
           HttpPutResponseHopLimit: 2
           HttpTokens: required
         SecurityGroupIds:
-          - !ImportValue 'myCapstoneProject::ClusterSecurityGroupId'
+          - !ImportValue 'myCapstoneProject/ControlPlaneSecurityGroup::ClusterSecurityGroupId'
         TagSpecifications:
           - ResourceType: instance
             Tags:
