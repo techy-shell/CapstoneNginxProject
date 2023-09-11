@@ -65,7 +65,7 @@ jobs:
           command: pip install cfn-lint && cfn-lint ekscfn.yml
 
 
-  deploy-image:
+  build-eks:
     docker:
       - image: python:3.7-alpine3.11
     steps:
@@ -88,6 +88,19 @@ jobs:
           command: |
             aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
             aws cloudformation describe-stacks
+
+  deploy-eks:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Check Docker installed
+          command:
+            docker --version
+            sudo systemctl status docker
+            sudo systemctl start docker
       - run:
           name: Deploy Docker image to EKS
           command: |
@@ -95,9 +108,11 @@ jobs:
             kubectl get nodes
             kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
             kubectl get deploy,rs,svc,pods
-            kubectl port-forward pod/capstone-75ddcd84f7-mmmgz --address 0.0.0.0 5001:5001
+            kubectl port-forward pod/capstone-75ddcd84f7-mmmgz --address 0.0.0.0 5001:5001    
 
 #  delay:
+#  docker:
+#    - image: amazon/aws-cli
 #    steps:
 #      - run: sleep 1200
 
@@ -120,8 +135,8 @@ workflows:
 #          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-      - deploy-image
-#          requires: [build-image]
+#      - deploy-image:
+      - deploy-eks
 #      - delay:
 #          requires: [deploy-image]
 #      - delete-cluster:
