@@ -67,7 +67,7 @@ jobs:
 
   deploy-image:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - setup_remote_docker
@@ -92,7 +92,6 @@ jobs:
           name: Deploy Docker image to EKS
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
-            docker tag capstone:latest 182785921749.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
             kubectl get nodes
             kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
             kubectl get deploy,rs,svc,pods
