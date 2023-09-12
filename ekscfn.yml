@@ -150,7 +150,7 @@ Resources:
       PolicyName: !Sub '${AWS::StackName}-PolicyCloudWatchMetrics'
       Roles:
         - !Ref ServiceRole
-        -
+
   PolicyELBPermissions:
     Type: 'AWS::IAM::Policy'
     Properties:
