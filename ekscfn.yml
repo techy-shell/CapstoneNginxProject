@@ -64,7 +64,7 @@ Resources:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
       ClusterName: myCapstoneProject
-      NodeRole: 'arn:aws:iam::012345678910:role/myEC2andEKS'
+      NodeRole: 'arn:aws:iam::012345678910:role/eksInstanceRole'
       ScalingConfig:
         MinSize: 2
         DesiredSize: 2
