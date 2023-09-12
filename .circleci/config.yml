@@ -84,7 +84,7 @@ jobs:
       - run:
           name: Build EKS cluster
           command: |
-            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn2.yml --parameters file://ekscfn2-parameters.json --capabilities CAPABILITY_IAM
+            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
             aws cloudformation describe-stacks
 
   #            aws cloudformation create-stack --stack-name myCapstoneProjectNodeGroup --region us-east-1 --template-body file://ekscfnNodeGroup.yml --capabilities CAPABILITY_IAM
