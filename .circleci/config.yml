@@ -85,7 +85,9 @@ jobs:
       - run:
           name: Install eksctl
           command: |
-            docker run --rm -it public.ecr.aws/eksctl/eksctl version
+            curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep $PLATFORM | sha256sum --check
+            tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
+            sudo mv /tmp/eksctl /usr/local/bin
       - run:
           name: create aws eks cluster
           command: |
