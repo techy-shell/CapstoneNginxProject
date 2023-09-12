@@ -70,9 +70,13 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - setup_remote_docker
       - run: apk add --update tar gzip nodejs npm curl
       - run: pip install awscli
+      - run: aws --version
+      - run:
+          name: install aws eks
+          command: |
+            sh ./install-eksctl.sh
       - aws-cli/setup:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_ACCESS_SECRET
@@ -83,9 +87,16 @@ jobs:
             curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
             mv /tmp/eksctl /usr/local/bin
       - run:
-          name: Build EKS cluster
+          name: create aws eks cluster
           command: |
-            eksctl create cluster --name myCapstoneCluster --nodes=4
+            aws sts get-caller-identity
+            eksctl create cluster --name capstone-eks-cluster-${CIRCLE_WORKFLOW_ID:0:7} --region=us-east-1 --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d
+            eksctl utils describe-stacks --region=us-east-1 --cluster=capstone-eks-cluster-${CIRCLE_WORKFLOW_ID:0:7}
+            eksctl get cluster --name=capstone-eks-cluster-${CIRCLE_WORKFLOW_ID:0:7} --region=us-east-1
+#      - run:
+#          name: Build EKS cluster
+#          command: |
+#            eksctl create cluster --name myCapstoneCluster --nodes=4
 
 #            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
 #            aws cloudformation describe-stacks
