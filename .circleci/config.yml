@@ -84,7 +84,7 @@ jobs:
 
   build-eks:
     docker:
-      - image: cimg/python:3.9
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - run: apk add --update tar gzip nodejs npm curl
