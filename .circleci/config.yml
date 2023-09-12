@@ -5,6 +5,23 @@ orbs:
   kubernetes: circleci/kubernetes@1.3
   aws-cli: circleci/aws-cli@2.0.6
 
+commands:
+  install_aws_eks:
+    description: Install eksctl binaries
+    steps:
+      - run:
+          name: Install eksctl binaries
+          command: |
+            mkdir -p src
+            curl --silent --location --retry 5 "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C src
+            chmod +x src/eksctl
+            SUDO=""
+            if [ $(id -u) -ne 0 ] && which sudo > /dev/null ; then
+                SUDO="sudo"
+            fi
+                $SUDO mv src/eksctl /usr/local/bin/
+                rmdir src
+
 jobs:
   linting:
     docker:
@@ -73,6 +90,7 @@ jobs:
       - run: apk add --update tar gzip nodejs npm curl
       - run: pip install awscli
       - run: aws --version
+      - install_aws_eks
       - setup_remote_docker
       - run:
           name: install aws eks
