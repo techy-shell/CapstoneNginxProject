@@ -81,9 +81,11 @@ jobs:
           name: Install eksctl
           command: |
             curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.zip"
-#      - run:
-#          name: Build EKS cluster
-#          command: |
+      - run:
+          name: Build EKS cluster
+          command: |
+            eksctl create cluster --name myCapstoneCluster --nodes=4
+
 #            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
 #            aws cloudformation describe-stacks
 
