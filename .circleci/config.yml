@@ -92,19 +92,19 @@ jobs:
       - run: aws --version
       - install_aws_eks
       - setup_remote_docker
-      - run:
-          name: install aws eks
-          command: |
-            sh ./install-eksctl.sh
+#      - run:
+#          name: install aws eks
+#          command: |
+#            sh ./install-eksctl.sh
       - aws-cli/setup:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_ACCESS_SECRET
             aws-region: AWS_REGION_NAME
-      - run:
-          name: Install eksctl
-          command: |
-            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-            mv /tmp/eksctl /usr/local/bin
+#      - run:
+#          name: Install eksctl
+#          command: |
+#            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+#            mv /tmp/eksctl /usr/local/bin
       - run:
           name: create aws eks cluster
           command: |
