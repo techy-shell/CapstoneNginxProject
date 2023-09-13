@@ -154,13 +154,15 @@ jobs:
 workflows:
   build:
     jobs:
-#      - linting
-#      - build-image:
-#          requires: [linting]
+      - linting
+      - build-image:
+          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-#      - build-eks
-      - deploy-eks
+      - build-eks:
+          requires: [build-image]
+      - deploy-eks:
+          requires: [build-eks]
 #      - delay:
 #          requires: [deploy-image]
 #      - delete-cluster:
