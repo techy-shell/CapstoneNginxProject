@@ -119,20 +119,21 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_ACCESS_SECRET
           aws-region: AWS_REGION_NAME
-#      - run:
-#          name: Deploy Docker image to EKS
-#          command: |
-#            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
-#            aws eks update-kubeconfig --region us-east-1 --name myCapstoneCluster
-#            kubectl get nodes
-#            kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
-#            kubectl get deploy,rs,svc,pods
       - run:
-          name: Port forward app
+          name: Deploy Docker image to EKS
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
             aws eks update-kubeconfig --region us-east-1 --name myCapstoneCluster
-            kubectl port-forward pod/capstone-75ddcd84f7-k7zq8 --address 0.0.0.0 5001:5001
+            kubectl get nodes
+            kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
+            kubectl expose deployment/capstone --type="LoadBalancer" --port 80
+            kubectl get deploy,rs,svc,pods
+#      - run:
+#          name: Port forward app
+#          command: |
+#            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
+#            aws eks update-kubeconfig --region us-east-1 --name myCapstoneCluster
+#            kubectl port-forward pod/capstone-75ddcd84f7-k7zq8 --address 0.0.0.0 5001:5001
 
   delete-cluster:
     docker:
