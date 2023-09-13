@@ -87,7 +87,6 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - run: apk add --update tar gzip nodejs npm curl
       - run: pip install awscli
       - run: aws --version
       - install_aws_eks
@@ -143,13 +142,14 @@ jobs:
       - run:
           name: Delete EKS cluster
           command: |
+            - install_aws_eks
             eksctl delete cluster --region=us-east-1 --name=myCapstoneCluster
 
 
 workflows:
   build:
     jobs:
-#      - linting
+      - linting
 #      - build-image:
 #          requires: [linting]
 #      - cfn-lint:
@@ -158,5 +158,5 @@ workflows:
 #          requires: [build-image]
 #      - deploy-eks
 #          requires: [build-eks]
-      - delete-cluster
+#      - delete-cluster
 
