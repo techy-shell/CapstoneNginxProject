@@ -92,31 +92,19 @@ jobs:
       - run: aws --version
       - install_aws_eks
       - setup_remote_docker
-#      - run:
-#          name: install aws eks
-#          command: |
-#            sh ./install-eksctl.sh
       - aws-cli/setup:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_ACCESS_SECRET
             aws-region: AWS_REGION_NAME
-#      - run:
-#          name: Install eksctl
-#          command: |
-#            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-#            mv /tmp/eksctl /usr/local/bin
       - run:
           name: create aws eks cluster
           command: |
             aws sts get-caller-identity
-            eksctl create cluster --name capstone-eks-cluster-${CIRCLE_WORKFLOW_ID:0:7} --region=us-east-1 --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d
-            eksctl utils describe-stacks --region=us-east-1 --cluster=capstone-eks-cluster-${CIRCLE_WORKFLOW_ID:0:7}
-            eksctl get cluster --name=capstone-eks-cluster-${CIRCLE_WORKFLOW_ID:0:7} --region=us-east-1
+            eksctl create cluster --name myCapstoneCluster-${CIRCLE_WORKFLOW_ID:0:7} --region=us-east-1 --nodes=4
+            eksctl get cluster --name=myCapstoneCluster-${CIRCLE_WORKFLOW_ID:0:7} --region=us-east-1
 #      - run:
 #          name: Build EKS cluster
 #          command: |
-#            eksctl create cluster --name myCapstoneCluster --nodes=4
-
 #            aws cloudformation create-stack --stack-name myCapstoneProject --region us-east-1 --template-body file://ekscfn.yml --capabilities CAPABILITY_IAM
 #            aws cloudformation describe-stacks
 
@@ -132,16 +120,10 @@ jobs:
           aws-secret-access-key: AWS_ACCESS_SECRET
           aws-region: AWS_REGION_NAME
       - run:
-          name: Check Docker installed
-          command:
-            docker --version
-            sudo systemctl status docker
-            sudo systemctl start docker
-      - run:
           name: Deploy Docker image to EKS
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
-            aws eks update-kubeconfig --region us-east-1 --name myCapstoneProject2
+            aws eks update-kubeconfig --region us-east-1 --name myCapstoneProject-${CIRCLE_WORKFLOW_ID:0:7}
             kubectl get nodes
             kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
             kubectl get deploy,rs,svc,pods
@@ -166,7 +148,7 @@ jobs:
       - run:
           name: Delete EKS cluster
           command: |
-            eksctl delete cluster --region=us-east-1 --name=myCapstoneProject
+            eksctl delete cluster --region=us-east-1 --name=myCapstoneProject-${CIRCLE_WORKFLOW_ID:0:7}
 
 
 workflows:
