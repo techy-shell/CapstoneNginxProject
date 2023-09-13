@@ -81,14 +81,11 @@ jobs:
           name: Validate CloudFormation template
           command: pip install cfn-lint && cfn-lint ekscfn.yml
 
-
   build-eks:
     docker:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - run: pip install awscli
-      - run: aws --version
       - install_aws_eks
       - setup_remote_docker
       - aws-cli/setup:
@@ -98,7 +95,6 @@ jobs:
       - run:
           name: create aws eks cluster
           command: |
-            aws sts get-caller-identity
             eksctl create cluster --name myCapstoneCluster --region=us-east-1 --nodes=4 --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d
             eksctl get cluster --name=myCapstoneCluster --region=us-east-1
 #      - run:
@@ -150,13 +146,13 @@ workflows:
   build:
     jobs:
       - linting
-#      - build-image:
-#          requires: [linting]
-#      - cfn-lint:
-#          requires: [build-image]
-#      - build-eks:
-#          requires: [build-image]
-#      - deploy-eks
-#          requires: [build-eks]
+      - build-image:
+          requires: [linting]
+      - cfn-lint:
+          requires: [build-image]
+      - build-eks:
+          requires: [build-image]
+      - deploy-eks:
+          requires: [build-eks]
 #      - delete-cluster
 
