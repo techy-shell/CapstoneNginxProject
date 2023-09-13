@@ -119,26 +119,20 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_ACCESS_SECRET
           aws-region: AWS_REGION_NAME
+#      - run:
+#          name: Deploy Docker image to EKS
+#          command: |
+#            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
+#            aws eks update-kubeconfig --region us-east-1 --name myCapstoneCluster
+#            kubectl get nodes
+#            kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
+#            kubectl get deploy,rs,svc,pods
       - run:
-          name: Deploy Docker image to EKS
+          name: Port forward app
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
             aws eks update-kubeconfig --region us-east-1 --name myCapstoneCluster
-            kubectl get nodes
-            kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
-            kubectl get deploy,rs,svc,pods
-#      - run:
-#          name: Port forward app
-#          command: |
-#            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
-#            aws eks update-kubeconfig --region us-east-1 --name myCapstoneProject2
-#            kubectl port-forward pod/capstone-75ddcd84f7-xv4sd --address 0.0.0.0 5001:5001
-
-#  delay:
-#  docker:
-#    - image: amazon/aws-cli
-#    steps:
-#      - run: sleep 1200
+            kubectl port-forward pod/capstone-75ddcd84f7-k7zq8 --address 0.0.0.0 5001:5001
 
   delete-cluster:
     docker:
@@ -148,23 +142,20 @@ jobs:
       - run:
           name: Delete EKS cluster
           command: |
-            eksctl delete cluster --region=us-east-1 --name=myCapstoneProject
+            eksctl delete cluster --region=us-east-1 --name=myCapstoneCluster
 
 
 workflows:
   build:
     jobs:
-      - linting
-      - build-image:
-          requires: [linting]
+#      - linting
+#      - build-image:
+#          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-      - build-eks:
-          requires: [build-image]
-      - deploy-eks:
-          requires: [build-eks]
-#      - delay:
-#          requires: [deploy-image]
-#      - delete-cluster:
-#          requires: [delay]
+#      - build-eks:
+#          requires: [build-image]
+      - deploy-eks
+#          requires: [build-eks]
+#      - delete-cluster
 
