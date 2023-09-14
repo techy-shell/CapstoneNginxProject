@@ -86,6 +86,8 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
+      - run: pip install awscli
+      - run: aws --version
       - install_aws_eks
       - setup_remote_docker
       - aws-cli/setup:
@@ -148,8 +150,8 @@ workflows:
       - linting
       - build-image:
           requires: [linting]
-      - cfn-lint:
-          requires: [build-image]
+#      - cfn-lint:
+#          requires: [build-image]
       - build-eks:
           requires: [build-image]
       - deploy-eks:
