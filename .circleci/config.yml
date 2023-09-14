@@ -98,8 +98,8 @@ jobs:
       - run:
           name: create aws eks cluster
           command: |
-            eksctl create cluster --name myCapstoneCluster --region=us-east-1 --nodes=4 --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d
-            eksctl get cluster --name=myCapstoneCluster --region=us-east-1
+            eksctl create cluster --name myCapstoneCluster1 --region=us-east-1 --nodes=4 --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d
+            eksctl get cluster --name=myCapstoneCluster1 --region=us-east-1
 #      - run:
 #          name: Build EKS cluster
 #          command: |
@@ -121,7 +121,7 @@ jobs:
           name: Deploy Docker image to EKS
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 182785921749.dkr.ecr.us-east-1.amazonaws.com
-            aws eks update-kubeconfig --region us-east-1 --name myCapstoneCluster
+            aws eks update-kubeconfig --region us-east-1 --name myCapstoneCluster1
             kubectl get nodes
             kubectl create deploy capstone --image=techyshell/capstone:v1.0.0
             kubectl expose deployment/capstone --type="LoadBalancer" --port 80
