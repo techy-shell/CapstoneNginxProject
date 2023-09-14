@@ -138,10 +138,10 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - install_aws_eks
       - run:
           name: Delete EKS cluster
           command: |
-            - install_aws_eks
             eksctl delete cluster --region=us-east-1 --name=myCapstoneCluster1
 
 
