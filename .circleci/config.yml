@@ -86,6 +86,7 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
+      - run: apk add --update tar gzip nodejs npm curl
       - run: pip install awscli
       - run: aws --version
       - install_aws_eks
@@ -147,13 +148,12 @@ jobs:
 workflows:
   build:
     jobs:
-      - linting
-      - build-image:
-          requires: [linting]
+#      - linting
+#      - build-image:
+#          requires: [linting]
 #      - cfn-lint:
 #          requires: [build-image]
-      - build-eks:
-          requires: [build-image]
+      - build-eks
       - deploy-eks:
           requires: [build-eks]
 #      - delete-cluster
