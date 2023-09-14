@@ -149,8 +149,8 @@ workflows:
   build:
     jobs:
       - linting
-#      - build-image:
-#          requires: [linting]
+      - build-image:
+          requires: [linting]
 #      - cfn-lint
 #      - build-eks
 #      - deploy-eks:
