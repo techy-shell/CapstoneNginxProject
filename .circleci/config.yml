@@ -148,11 +148,10 @@ jobs:
 workflows:
   build:
     jobs:
-#      - linting
-#      - build-image:
-#          requires: [linting]
-#      - cfn-lint:
-#          requires: [build-image]
+      - linting
+      - build-image:
+          requires: [linting]
+#      - cfn-lint
       - build-eks
       - deploy-eks:
           requires: [build-eks]
