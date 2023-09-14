@@ -142,7 +142,7 @@ jobs:
           name: Delete EKS cluster
           command: |
             - install_aws_eks
-            eksctl delete cluster --region=us-east-1 --name=myCapstoneCluster
+            eksctl delete cluster --region=us-east-1 --name=myCapstoneCluster1
 
 
 workflows:
@@ -152,8 +152,8 @@ workflows:
 #      - build-image:
 #          requires: [linting]
 #      - cfn-lint
-      - build-eks
-      - deploy-eks:
-          requires: [build-eks]
-#      - delete-cluster
+#      - build-eks
+#      - deploy-eks:
+#          requires: [build-eks]
+      - delete-cluster
 
